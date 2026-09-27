@@ -1,0 +1,112 @@
+{
+  "S001": {
+    "name": "Alice Smith",
+    "age": 15,
+    "class": "10th",
+    "roll": 1,
+    "Math marks": 85,
+    "English marks": 92,
+    "Science marks": 88,
+    "phone": "555-0101"
+  },
+  "S002": {
+    "name": "Bob Johnson",
+    "age": 16,
+    "class": "10th",
+    "roll": 2,
+    "Math marks": 78,
+    "English marks": 85,
+    "Science marks": 90,
+    "phone": "555-0102"
+  },
+  "S003": {
+    "name": "Charlie Brown",
+    "age": 15,
+    "class": "10th",
+    "roll": 3,
+    "Math marks": 92,
+    "English marks": 88,
+    "Science marks": 95,
+    "phone": "555-0103"
+  },
+  "S004": {
+    "name": "Diana Prince",
+    "age": 16,
+    "class": "10th",
+    "roll": 4,
+    "Math marks": 95,
+    "English marks": 95,
+    "Science marks": 92,
+    "phone": "555-0104"
+  },
+  "S005": {
+    "name": "Ethan Hunt",
+    "age": 15,
+    "class": "10th",
+    "roll": 5,
+    "Math marks": 70,
+    "English marks": 75,
+    "Science marks": 80,
+    "phone": "555-0105"
+  },
+  "S006": {
+    "name": "Fiona Gallagher",
+    "age": 16,
+    "class": "10th",
+    "roll": 6,
+    "Math marks": 88,
+    "English marks": 82,
+    "Science marks": 85,
+    "phone": "555-0106"
+  },
+  "S007": {
+    "name": "George Miller",
+    "age": 15,
+    "class": "10th",
+    "roll": 7,
+    "Math marks": 65,
+    "English marks": 70,
+    "Science marks": 72,
+    "phone": "555-0107"
+  },
+  "S008": {
+    "name": "Hannah Abbott",
+    "age": 16,
+    "class": "10th",
+    "roll": 8,
+    "Math marks": 90,
+    "English marks": 94,
+    "Science marks": 89,
+    "phone": "555-0108"
+  },
+  "S009": {
+    "name": "Ian Malcolm",
+    "age": 15,
+    "class": "10th",
+    "roll": 9,
+    "Math marks": 82,
+    "English marks": 79,
+    "Science marks": 98,
+    "phone": "555-0109"
+  },
+  "S010": {
+    "name": "Julia Child",
+    "age": 16,
+    "class": "10th",
+    "roll": 10,
+    "Math marks": 75,
+    "English marks": 88,
+    "Science marks": 76,
+    "phone": "555-0110"
+  },
+  "S015": {
+    "name": "Julia",
+    "age": 14,
+    "class": "9th",
+    "roll": 10,
+    "Math marks": 75,
+    "English marks": 88,
+    "Science marks": 76,
+    "phone": "555-0110"
+  }
+}
