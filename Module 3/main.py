@@ -1,7 +1,22 @@
 from fastapi import FastAPI , Path ,HTTPException , Query,Body
+from pydantic import BaseModel, Field
+from typing import Annotated
+
 import json
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
+
+class Student(BaseModel):
+    id: Annotated[str,Field(..., description='Student ID',example='S001')]
+    name: Annotated[str,Field(..., description='Student Name')]
+    age : Annotated[int,Field(..., gt=3,lt=20)]
+    student_class: Annotated[int,Field(...,gt=0,lt=13)]
+    roll: Annotated[int,Field(..., gt=0,lt=101)]
+    Math_marks: Annotated[int,Field(...,gt=0,lt=101)]
+    English_marks: Annotated[int,Field(...,gt=0,lt=101)]
+    Science_marks: Annotated[int,Field(...,gt=0,lt=101)]
+    phone: Annotated[int,Field(..., example='01900000000')]
 
 def loaddata():
     with open('students.json','r') as f:
@@ -39,7 +54,7 @@ def view_student_by_id(student_id: str = Path(..., description='students by id',
 @app.get('/sort')
 def view_sorted_students(sorted_by: str = Query(..., description='sorted Student'),order: str = Query('asc')):
 
-    valid_fields =["age","class","roll","Math marks","English marks","Science marks",]
+    valid_fields =["age","student_class","roll","Math_marks","English_marks","Science_marks",]
     if sorted_by not in valid_fields:
         raise HTTPException(status_code=404, detail= f"Invalid field, select from {valid_fields}")
     
@@ -57,10 +72,15 @@ def view_sorted_students(sorted_by: str = Query(..., description='sorted Student
 
 
 @app.post('/create')
-def create_student(student: dict = Body()):
+def create_student(student: Student):
 
     data = loaddata()
-    student_id = student['id']
-    data[student_id] = student
-    del data[student_id]['id']
+
+    if student.id in data:
+        raise HTTPException(status_code=400, detail= "Student id already exist..")
+    
+    data[student.id] = student.model_dump(exclude=["id"])
+    # del data[student_id]['id']
     savedata(data)
+    
+    return JSONResponse(status_code= 201, content={'massage': 'Student created Successfully..'})
