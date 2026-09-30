@@ -1,6 +1,6 @@
 from fastapi import FastAPI , Path ,HTTPException , Query,Body
 from pydantic import BaseModel, Field
-from typing import Annotated
+from typing import Annotated ,Optional
 
 import json
 from fastapi.responses import JSONResponse
@@ -17,6 +17,17 @@ class Student(BaseModel):
     English_marks: Annotated[int,Field(...,gt=0,lt=101)]
     Science_marks: Annotated[int,Field(...,gt=0,lt=101)]
     phone: Annotated[int,Field(..., example='01900000000')]
+
+class StudentUpdate(BaseModel):
+    name: Annotated[Optional[str],Field(default=None)]
+    age : Annotated[Optional[int],Field(default=None)]
+    student_class: Annotated[Optional[int],Field(default=None)]
+    roll: Annotated[Optional[int],Field(default=None)]
+    Math_marks: Annotated[Optional[int],Field(default=None)]
+    English_marks: Annotated[Optional[int],Field(default=None)]
+    Science_marks: Annotated[Optional[int],Field(default=None)]
+    phone: Annotated[Optional[str],Field(default=None)]
+
 
 def loaddata():
     with open('students.json','r') as f:
@@ -84,3 +95,32 @@ def create_student(student: Student):
     savedata(data)
     
     return JSONResponse(status_code= 201, content={'massage': 'Student created Successfully..'})
+
+
+@app.put('/update/{student_id}')
+def update_student(student: StudentUpdate,student_id: str):
+
+    data = loaddata()
+
+    if student_id not in data:
+        raise HTTPException(status_code=404, detail= "Student Not Found..")
+    
+    data[student_id].update(student.model_dump(exclude_unset=True))
+
+    savedata(data)
+    
+    return JSONResponse(status_code= 200, content={'massage': 'Student updated Successfully..'}) 
+
+@app.delete('/delete/{student_id}')
+def update_student(student_id: str):
+
+    data = loaddata()
+
+    if student_id not in data:
+        raise HTTPException(status_code=404, detail= "Student Not Found..")
+    
+    del data[student_id]
+
+    savedata(data)
+    
+    return JSONResponse(status_code= 200, content={'massage': 'Student deleted Successfully..'}) 
