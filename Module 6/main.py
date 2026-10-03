@@ -6,10 +6,12 @@ from tables import Todos
 from typing import Annotated, Optional
 from database import engine,SessionLocal
 from fastapi.responses import JSONResponse
+from router import auth
 
 app = FastAPI()
 
 tables.Base.metadata.create_all(bind=engine)
+app.include_router(auth.router)
 
 class Todo(BaseModel):
     id : int
