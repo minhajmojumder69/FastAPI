@@ -69,7 +69,7 @@ def create_todos(user: user_dependency,db : database_dependency, new_todo: Todo)
     return JSONResponse(status_code= 201, content={'massage': 'todo created Successfully..'})
 
 @app.put('/update/{todo_id}')
-def create_todos(user: user_dependency,db : database_dependency, todo_id: int, update_todo: Todo_update):
+def update_todos(user: user_dependency,db : database_dependency, todo_id: int, update_todo: Todo_update):
 
     if user is None:
         raise HTTPException(status_code=401,detail="Failed Authentication")
@@ -87,7 +87,7 @@ def create_todos(user: user_dependency,db : database_dependency, todo_id: int, u
     return JSONResponse(status_code= 200, content={'massage': 'todo updated Successfully..'}) 
 
 @app.delete('/delete/{todo_id}')
-def create_todos(user: user_dependency,db : database_dependency, todo_id: int):
+def delete_todos(user: user_dependency,db : database_dependency, todo_id: int):
 
     if user is None:
         raise HTTPException(status_code=401,detail="Failed Authentication")
