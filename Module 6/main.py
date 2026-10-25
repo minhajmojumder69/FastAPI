@@ -2,7 +2,7 @@ from fastapi import FastAPI,Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 import tables
-from tables import Todos
+from tables import Todos,User
 from typing import Annotated, Optional
 from database import engine,SessionLocal
 from fastapi.responses import JSONResponse
@@ -100,3 +100,12 @@ def delete_todos(user: user_dependency,db : database_dependency, todo_id: int):
 
     db.commit()
     return JSONResponse(status_code= 200, content={'massage': 'todo deleted Successfully..'}) 
+
+
+@app.get('/user')
+def get_user(user: user_dependency,db : database_dependency):
+
+    if user is None:
+            raise HTTPException(status_code=401,detail="Failed Authentication")
+
+    return db.query(User).filter(Todos.owner_id == user.get('id')).first()
