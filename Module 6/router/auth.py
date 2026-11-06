@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 from database import engine,SessionLocal
 from typing import Annotated, Optional
 from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
-from router.auth import get_current_user
 from jose import jwt
 
 router = APIRouter()
@@ -26,7 +25,6 @@ def get_db():
     finally:
         db.close()
 database_dependency = Annotated[Session,Depends(get_db)]
-user_dependency = Annotated[dict,Depends(get_current_user)]
 
 
 class Users(BaseModel):
@@ -75,6 +73,8 @@ def get_current_user(token: Annotated[str,Depends(Oauth2_bearer)]):
         return {'username': username,'id': user_id,'role': role}
     except:
         raise HTTPException(status_code=404,detail='User not Found')
+        
+user_dependency = Annotated[dict,Depends(get_current_user)]
 
 @router.post('/createuser')
 def create_users(db : database_dependency, new_users: Users):
@@ -111,7 +111,7 @@ def update_user(user: user_dependency,db : database_dependency, update_user: Use
     if user is None:
         raise HTTPException(status_code=401,detail="Failed Authentication")
 
-    user = db.query(User).filter(User.owner_id == user.get('id')).first()  
+    user = db.query(User).filter(User.id == user.get('id')).first()  
 
     updated = update_user.model_dump(exclude_unset=True)
 
@@ -128,7 +128,7 @@ def update_password(user: user_dependency,db : database_dependency, update_passw
     if user is None:
         raise HTTPException(status_code=401,detail="Failed Authentication")
 
-    user = db.query(User).filter(User.owner_id == user.get('id')).first()  
+    user = db.query(User).filter(User.id == user.get('id')).first()  
 
     if not bcrypt_context.verify(update_password.current_password, user.hash_password):
         raise HTTPException(status_code=401,detail="Wrong Password")

@@ -46,7 +46,7 @@ def read_todos(user: user_dependency,db : database_dependency):
     return db.query(Todos).filter(Todos.owner_id == user.get('id')).all() 
 
 @app.get('/todo/{todos_id}')
-def read_specific_todos(user: user_dependency,db : database_dependency,todos_id = int):
+def read_specific_todos(user: user_dependency,db : database_dependency,todos_id : int):
 
     if user is None:
             raise HTTPException(status_code=401,detail="Failed Authentication")
@@ -108,4 +108,4 @@ def get_user(user: user_dependency,db : database_dependency):
     if user is None:
             raise HTTPException(status_code=401,detail="Failed Authentication")
 
-    return db.query(User).filter(Todos.owner_id == user.get('id')).first()
+    return db.query(User).filter(User.id == user.get('id')).first()

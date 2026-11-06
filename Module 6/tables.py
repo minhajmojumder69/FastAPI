@@ -21,5 +21,5 @@ class User(Base):
     lastname = Column(String)
     hash_password = Column(String)
     is_active = Column(Boolean, default=True)
-    role = Column(String),
+    role = Column(String)
     phone_number = Column(String)
